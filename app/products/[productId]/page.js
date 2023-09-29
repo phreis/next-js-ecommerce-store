@@ -21,6 +21,12 @@ export default function ProductPage(props) {
     <div>
       This is a single product page
       <h1>{singleProduct.name}</h1>
+      <Image
+        src={singleProduct.image}
+        width={200}
+        height={200}
+        alt={singleProduct.name}
+      />
       <ProductAdder id={singleProduct.id} />
     </div>
   );

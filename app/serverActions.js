@@ -3,7 +3,6 @@ import { cookies } from 'next/headers';
 import { getCartData } from './cart/Cart.js';
 
 export async function addCartItemServerAction(item) {
-  // {product: String ,quantiy: Number}
   let newItems;
 
   const allItems = getCartData();
@@ -18,4 +17,15 @@ export async function addCartItemServerAction(item) {
   }
 
   await cookies().set('cart', JSON.stringify(newItems));
+}
+
+export async function removeCartItemServerAction(itemToBeRemoved) {
+  const allItems = getCartData();
+
+  const allItemsNew = allItems.filter((item) => item.id !== itemToBeRemoved.id);
+
+  await cookies().set('cart', JSON.stringify(allItemsNew));
+}
+export async function clearCartItemServerAction() {
+  await cookies().delete('cart');
 }

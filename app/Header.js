@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import React from 'react';
 import { getCartItemsTotal } from './cart/Cart.js';
-
-// TODO: get the number of items from cart
+import styles from './Header.module.scss';
 
 function Header() {
   return (
     <header>
       <nav>
-        <div>
+        <div className={styles.links}>
           <Link href="/">Home</Link>
           <Link href="/products">Products</Link>
           <Link href="/cart">Shopping cart</Link>

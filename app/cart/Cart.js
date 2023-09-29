@@ -1,12 +1,18 @@
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 import React from 'react';
 import { getProduct } from '../../database/products.js';
+import ProductRemover from '../ProductRemover.js';
 
 // import { getCartItems } from '../../database/cartData.js';
 
 export function getCartData() {
   const allItemsRaw = cookies().get('cart');
-  return allItemsRaw ? JSON.parse(allItemsRaw.value) : [];
+  return allItemsRaw
+    ? allItemsRaw.value
+      ? JSON.parse(allItemsRaw.value)
+      : false
+    : [];
 }
 
 export function getCartProducts() {
@@ -16,9 +22,17 @@ export function getCartProducts() {
   }));
 }
 export function getCartItemsTotal() {
-  return getCartData().reduce((prev, curr) => ({
-    quantity: prev.quantity + curr.quantity,
-  })).quantity;
+  const cartData = getCartData();
+  if (cartData) {
+    return cartData.reduce(
+      (prev, curr) => ({
+        quantity: prev.quantity + curr.quantity,
+      }),
+      { quantity: 0 }, // initial Value,
+    ).quantity;
+  } else {
+    return 0;
+  }
 }
 export function getCartItemsTotalPrice() {
   let subtotal = 0;
@@ -30,19 +44,40 @@ export function getCartItemsTotalPrice() {
 function Cart() {
   // setProductsInCart([...productsInCart], getCartItems());
 
-  return (
-    <div>
-      <ul>
-        {getCartProducts().map((item) => (
-          <li key={`product-${item.product.key}`}>
-            {item.quantity} pieces of {item.product.name} @ {item.product.price}{' '}
-            each. Total: {item.quantity * item.product.price}
-          </li>
-        ))}
-      </ul>
-      Subtotal: {getCartItemsTotalPrice()}
-    </div>
-  );
+  if (getCartData().length) {
+    return (
+      <div>
+        <ul>
+          {getCartProducts().map((item) => (
+            <li key={`product-${item.product.id}`}>
+              {item.quantity} pieces of {item.product.name} @{' '}
+              {item.product.price} each. Total:{' '}
+              {item.quantity * item.product.price}
+              <ProductRemover id={item.product.id} />
+            </li>
+          ))}
+        </ul>
+        Subtotal: {getCartItemsTotalPrice()}
+        <div>
+          <Link role="button" href={`/checkout`}>
+            Checkout
+          </Link>
+          <Link role="button" href={`/products`}>
+            Continue shopping
+          </Link>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <p>
+        Your cart is empty!{' '}
+        <Link role="button" href={`/products`}>
+          Continue shopping
+        </Link>
+      </p>
+    );
+  }
 }
 
 export default Cart;
