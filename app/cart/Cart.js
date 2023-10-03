@@ -15,11 +15,16 @@ export function getCartData() {
     : [];
 }
 
-export function getCartProducts() {
-  return getCartData().map((item) => ({
-    product: getProduct(item.id),
-    quantity: item.quantity,
-  }));
+export async function getCartProducts() {
+  return await Promise.all(
+    getCartData().map(async (item) => {
+      const [product] = await getProduct(item.id);
+      return {
+        product: product,
+        quantity: item.quantity,
+      };
+    }),
+  );
 }
 export function getCartItemsTotal() {
   const cartData = getCartData();
@@ -34,32 +39,39 @@ export function getCartItemsTotal() {
     return 0;
   }
 }
-export function getCartItemsTotalPrice() {
+export async function getCartItemsTotalPrice() {
   let subtotal = 0;
-  getCartProducts().forEach((item) => {
+  const cartProducts = await getCartProducts();
+  cartProducts.forEach((item) => {
     subtotal += item.quantity * item.product.price;
   });
   return subtotal;
 }
-function Cart() {
-  // setProductsInCart([...productsInCart], getCartItems());
+export default async function Cart() {
+  const cartProducts = await getCartProducts();
+  const subTotal = await getCartItemsTotalPrice();
 
-  if (getCartData().length) {
+  if (cartProducts.length) {
     return (
       <div>
         <ul>
-          {getCartProducts().map((item) => (
-            <li key={`product-${item.product.id}`}>
-              {item.quantity} pieces of {item.product.name} @{' '}
-              {item.product.price} each. Total:{' '}
+          {cartProducts.map((item) => (
+            <li
+              data-test-id={`cart-product-${item.product.id}`}
+              key={`product-${item.product.id}`}
+            >
+              <div data-test-id={`cart-product-quantity-${item.product.id}`}>
+                {item.quantity}
+              </div>
+              pieces of {item.product.name} @ {item.product.price} each. Total:
               {item.quantity * item.product.price}
               <ProductRemover id={item.product.id} />
             </li>
           ))}
         </ul>
-        Subtotal: {getCartItemsTotalPrice()}
+        <div data-test-id="cart-total">Subtotal: {subTotal}</div>
         <div>
-          <Link role="button" href={`/checkout`}>
+          <Link data-test-id="cart-checkout" role="button" href={`/checkout`}>
             Checkout
           </Link>
           <Link role="button" href={`/products`}>
@@ -79,5 +91,3 @@ function Cart() {
     );
   }
 }
-
-export default Cart;

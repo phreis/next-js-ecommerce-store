@@ -44,7 +44,7 @@ function CheckoutForm() {
         <p>
           <label htmlFor="email">EMail</label>
           <input
-            data-test-id="checkout-email-name"
+            data-test-id="checkout-email"
             id="email"
             name="email"
             type="email"
@@ -55,7 +55,7 @@ function CheckoutForm() {
         <p>
           <label htmlFor="address">Address</label>
           <input
-            data-test-id="checkout-address-name"
+            data-test-id="checkout-address"
             id="address"
             name="address"
             required
@@ -63,12 +63,7 @@ function CheckoutForm() {
         </p>
         <p>
           <label htmlFor="city">City</label>
-          <input
-            data-test-id="checkout-city-name"
-            id="city"
-            name="city"
-            required
-          />
+          <input data-test-id="checkout-city" id="city" name="city" required />
         </p>
         <p>
           <label htmlFor="postalcode">Postalcode</label>
@@ -127,7 +122,11 @@ function CheckoutForm() {
           />
         </p>
 
-        <button name="intent" value="checkout">
+        <button
+          data-test-id="checkout-confirm-order"
+          name="intent"
+          value="checkout"
+        >
           Checkout
         </button>
       </form>

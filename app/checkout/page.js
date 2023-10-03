@@ -1,14 +1,19 @@
 import Link from 'next/link';
 import React from 'react';
-import { getCartData } from '../cart/Cart.js';
+import { getCartData, getCartItemsTotalPrice } from '../cart/Cart.js';
 import CheckoutForm from './CheckoutForm.js';
 
-function CheckoutPage() {
+export default async function CheckoutPage() {
+  const subTotal = await getCartItemsTotalPrice();
   return (
     <div>
       <h1>Checkout</h1>
+
       {getCartData().length ? (
-        <CheckoutForm />
+        <>
+          Subtotal:{subTotal}
+          <CheckoutForm />
+        </>
       ) : (
         <p>
           Your cart is empty!{' '}
@@ -20,5 +25,3 @@ function CheckoutPage() {
     </div>
   );
 }
-
-export default CheckoutPage;

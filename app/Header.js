@@ -9,12 +9,16 @@ function Header() {
       <nav>
         <div className={styles.links}>
           <Link href="/">Home</Link>
-          <Link href="/products">Products</Link>
-          <Link href="/cart">Shopping cart</Link>
+          <Link data-test-id="products-link" href="/products">
+            Products
+          </Link>
+          <Link data-test-id="cart-link" href="/cart">
+            Shopping cart
+          </Link>
           <Link href="/checkout">Checkout</Link>
         </div>
       </nav>
-      Items total: {getCartItemsTotal()}
+      <div data-test-id="cart-count">Items total: {getCartItemsTotal()}</div>
     </header>
   );
 }

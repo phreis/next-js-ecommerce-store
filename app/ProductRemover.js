@@ -10,7 +10,11 @@ function ProductRemover(props) {
   return (
     <div>
       <form action={removeItem}>
-        <button name="intent" value="removeItem">
+        <button
+          data-test-id={`cart-product-remove-${props.id}`}
+          name="intent"
+          value="removeItem"
+        >
           Remove
         </button>
       </form>

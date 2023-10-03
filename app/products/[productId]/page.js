@@ -21,12 +21,14 @@ export default async function ProductPage(props) {
     <div>
       This is a single product page
       <h1>{singleProduct.name}</h1>
-      <Image
+      <img
+        data-test-id="product-image"
         src={singleProduct.image}
-        width={200}
-        height={200}
+        width={300}
+        height={300}
         alt={singleProduct.name}
       />
+      <p data-test-id="product-price">Price: {singleProduct.price}</p>
       <ProductAdder id={singleProduct.id} />
     </div>
   );
