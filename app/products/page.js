@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import { getProducts } from '../../database/products.js';
+import { getProducts } from '../../database/products';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const prod = await getProducts();
   return (
     <main>
       <h1>All products</h1>
-      {getProducts().map((product) => (
+      {prod.map((product) => (
         <li key={`product-${product.id}`}>
           <Link href={`/products/${product.id}`}>
             {product.id} {product.name}

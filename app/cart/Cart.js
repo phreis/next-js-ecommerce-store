@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import React from 'react';
-import { getProduct } from '../../database/products.js';
+import { getProduct } from '../../database/products';
 import ProductRemover from '../ProductRemover.js';
 
 // import { getCartItems } from '../../database/cartData.js';
