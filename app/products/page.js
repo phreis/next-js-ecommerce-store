@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Image from 'next/image.js';
 import { getProducts } from '../../database/products';
 
 export default async function HomePage() {
@@ -8,9 +8,18 @@ export default async function HomePage() {
       <h1>All products</h1>
       {prod.map((product) => (
         <li key={`product-${product.id}`}>
-          <Link href={`/products/${product.id}`}>
+          <a
+            data-test-id={`product-${product.id}`}
+            href={`/products/${product.id}`}
+          >
             {product.id} {product.name}
-          </Link>
+            <Image
+              src={product.image}
+              width={200}
+              height={200}
+              alt={product.name}
+            />
+          </a>
         </li>
       ))}
     </main>

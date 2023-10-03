@@ -49,17 +49,24 @@ function Cart() {
       <div>
         <ul>
           {getCartProducts().map((item) => (
-            <li key={`product-${item.product.id}`}>
-              {item.quantity} pieces of {item.product.name} @{' '}
-              {item.product.price} each. Total:{' '}
+            <li
+              data-test-id={`cart-product-${item.product.id}`}
+              key={`product-${item.product.id}`}
+            >
+              <div data-test-id={`cart-product-quantity-${item.product.id}`}>
+                {item.quantity}{' '}
+              </div>{' '}
+              pieces of {item.product.name} @ {item.product.price} each. Total:{' '}
               {item.quantity * item.product.price}
               <ProductRemover id={item.product.id} />
             </li>
           ))}
         </ul>
-        Subtotal: {getCartItemsTotalPrice()}
+        <div data-test-id="cart-total">
+          Subtotal: {getCartItemsTotalPrice()}
+        </div>
         <div>
-          <Link role="button" href={`/checkout`}>
+          <Link data-test-id="cart-checkout" role="button" href={`/checkout`}>
             Checkout
           </Link>
           <Link role="button" href={`/products`}>

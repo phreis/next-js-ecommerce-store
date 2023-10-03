@@ -19,8 +19,18 @@ function ProductAdder(product) {
   return (
     <div>
       <form id="form" action={addItem}>
-        <input type="number" name="quantity" defaultValue="1" min="1" />
-        <button name="intent" value="addItem">
+        <input
+          data-test-id="product-quantity"
+          type="number"
+          name="quantity"
+          defaultValue="1"
+          min="1"
+        />
+        <button
+          data-test-id="product-add-to-cart"
+          name="intent"
+          value="addItem"
+        >
           Add to cart
         </button>
       </form>
