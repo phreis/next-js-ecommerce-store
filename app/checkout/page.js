@@ -1,15 +1,17 @@
 import Link from 'next/link';
 import React from 'react';
-import { getCartData, getCartItemsTotalPrice } from '../cart/Cart.js';
+import { getCartData, getCartItemsTotalPrice } from '../serverActions.js';
 import CheckoutForm from './CheckoutForm.js';
 
 export default async function CheckoutPage() {
   const subTotal = await getCartItemsTotalPrice();
+  const cardData = await getCartData();
+
   return (
     <div>
       <h1>Checkout</h1>
 
-      {getCartData().length ? (
+      {cardData.length ? (
         <>
           Subtotal:{subTotal}
           <CheckoutForm />

@@ -1,24 +1,13 @@
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import React from 'react';
-import { clearCartItemServerAction } from '../serverActions.js';
+import { checkoutFormAction } from '../serverActions.js';
 import styles from './CheckoutForm.module.scss';
 
 function CheckoutForm() {
-  async function checkout(formData) {
-    'use server';
-    await clearCartItemServerAction();
-
-    //    console.log(formData);
-    revalidatePath('/checkout'); // invalidate next.js path, which results to initialized form fields on checkout page
-    redirect('/thankyou');
-  }
-
   return (
     <div>
       <form
         id="form"
-        action={checkout}
+        action={checkoutFormAction}
         className={styles.checkoutFormContainer}
       >
         <p>
