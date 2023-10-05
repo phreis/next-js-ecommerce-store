@@ -4,7 +4,7 @@ import { removeCartItemServerAction } from './serverActions';
 function ProductRemover(props) {
   async function removeItem() {
     'use server';
-    await removeCartItemServerAction({ id: props.id });
+    await removeCartItemServerAction(props.id);
   }
 
   return (

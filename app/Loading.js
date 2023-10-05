@@ -1,7 +1,5 @@
 import React from 'react';
 
-function Loading() {
-  return <div>Loading...</div>;
+export default function Loading() {
+  return <div data-test-id="loading">Loading...</div>;
 }
-
-export default Loading;

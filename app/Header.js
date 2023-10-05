@@ -3,7 +3,8 @@ import React from 'react';
 import { getCartItemsTotal } from './cart/Cart.js';
 import styles from './Header.module.scss';
 
-function Header() {
+async function Header() {
+  const itemsTotal = await getCartItemsTotal();
   return (
     <header>
       <nav>
@@ -18,7 +19,7 @@ function Header() {
           <Link href="/checkout">Checkout</Link>
         </div>
       </nav>
-      <div data-test-id="cart-count">Items total: {getCartItemsTotal()}</div>
+      <div data-test-id="cart-count">Items total: {itemsTotal}</div>
     </header>
   );
 }
