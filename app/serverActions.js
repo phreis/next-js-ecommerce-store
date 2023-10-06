@@ -99,37 +99,38 @@ export async function getCartItemsTotalPrice() {
 export async function cartFormAction(formData) {
   const cartProducts = await getCartProducts();
 
-  cartProducts.forEach((elem) => console.log(elem));
-
   //Remove Item
+  /*   fromData: (value: <idToBeDeleted>)
+  { name: 'quantity-id-3', value: '3' },
+  { name: 'quantity-id-5', value: '1' },
+  { name: 'removeItem', value: '5' } */
   const idToBeDeleted = formData.get('removeItem');
   if (idToBeDeleted) {
     await removeCartItemServerAction(Number(idToBeDeleted));
   }
-  //console.log(cartProducts);
-  //cartProducts.forEach(async (elem) => console.log(elem));
 
   // Change Quantity
   if (formData.has('changeQuantity')) {
-    // Display the key/value pairs
+    /*  formData: (value: <quantity> )
+    { name: 'quantity-id-1', value: '1' },
+    { name: 'changeQuantity', value: '' },
+    { name: 'quantity-id-3', value: '3' } */
+
     for (const pair of formData.entries()) {
-      //console.log(`${pair[0]}, ${pair[1]}`);
       const id = /quantity-id-(\d+)/g.exec(pair[0]);
       if (id) {
-        //we have a qunatiy form field. Did quantity change?
+        //we have a quantiy form field. Did the quantity change?
         const itemIdToCheck = Number(id[1]);
         const quantity_new = Number(pair[1]);
 
-        for (const cartProduct of cartProducts) {
-          if (
-            cartProduct.product.id === itemIdToCheck &&
-            cartProduct.quantity !== quantity_new
-          ) {
-            await changeCartItemServerAction(
-              cartProduct.product.id,
-              quantity_new,
-            );
-          }
+        if (
+          cartProducts.find(
+            (cartProduct) =>
+              cartProduct.product.id === itemIdToCheck &&
+              cartProduct.quantity !== quantity_new,
+          )
+        ) {
+          await changeCartItemServerAction(itemIdToCheck, quantity_new);
         }
       }
     }
@@ -138,7 +139,7 @@ export async function cartFormAction(formData) {
 export async function checkoutFormAction(formData) {
   await clearCartItemServerAction();
 
-  //    console.log(formData);
-  revalidatePath('/checkout'); // invalidate next.js path, which results to initialized form fields on checkout page
+  // invalidate next.js path, which results to initialized form fields on checkout page
+  revalidatePath('/checkout');
   redirect('/thankyou');
 }

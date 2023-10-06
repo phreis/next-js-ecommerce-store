@@ -7,19 +7,27 @@ async function Header() {
   const itemsTotal = await getCartItemsTotal();
   return (
     <header>
-      <nav>
-        <div className={styles.links}>
+      <nav className={styles.nav}>
+        <div className={styles.left}>
           <Link href="/">Home</Link>
           <Link data-test-id="products-link" href="/products">
             Products
           </Link>
-          <Link data-test-id="cart-link" href="/cart">
+        </div>
+        <div className={styles.right}>
+          <Link
+            className={styles.shoppingCart}
+            data-test-id="cart-link"
+            href="/cart"
+          >
             Shopping cart
           </Link>
-          <Link href="/checkout">Checkout</Link>
+          <Link className={styles.checkout} href="/checkout">
+            Checkout{' '}
+            <span data-test-id="cart-count">Items total: {itemsTotal}</span>
+          </Link>
         </div>
       </nav>
-      <div data-test-id="cart-count">Items total: {itemsTotal}</div>
     </header>
   );
 }

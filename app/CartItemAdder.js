@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 import { addCartItemServerAction } from './serverActions';
 
-function ProductAdder(product) {
+export default function CartItemAdder(product) {
   async function addItem(formData) {
     'use server';
     await addCartItemServerAction({
@@ -37,5 +37,3 @@ function ProductAdder(product) {
     </div>
   );
 }
-
-export default ProductAdder;
