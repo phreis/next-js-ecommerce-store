@@ -3,9 +3,17 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getProduct } from '../database/products';
+import { Product as ProductType } from '../migrations/00000-createTableProduct';
 
-export async function getCartData() {
-  const allItemsRaw = cookies().get('cart');
+export type CartItemType = {
+  id: ProductType['id'];
+  quantity: number;
+};
+
+/** Returns the actual cart content from the cookie 'cart'
+ */
+export async function getCartData(): Promise<CartItemType[]> {
+  const allItemsRaw = await cookies().get('cart');
   return allItemsRaw
     ? allItemsRaw.value
       ? JSON.parse(allItemsRaw.value)
@@ -13,13 +21,18 @@ export async function getCartData() {
     : [];
 }
 
-export async function addCartItemServerAction(item) {
+/** Adds a CartItem to the shopping cart.
+ * In case the product is the cart already, the quantiy is increased
+ */
+export async function addCartItemServerAction(item: CartItemType) {
   let newItems;
 
   const allItems = await getCartData();
 
   // In case the product is the cart already, just increase the quantiy
-  const productAlreadyThere = allItems.find((itm) => itm.id === item.id);
+  const productAlreadyThere = allItems.find(
+    (itm: CartItemType) => itm.id === item.id,
+  );
   if (productAlreadyThere) {
     productAlreadyThere.quantity += item.quantity;
     newItems = allItems;
@@ -30,25 +43,29 @@ export async function addCartItemServerAction(item) {
   await cookies().set('cart', JSON.stringify(newItems));
 }
 
-export async function changeCartItemServerAction(id, quantity) {
+/** Changes the quantity of an existing CartItem */
+export async function changeCartItemServerAction(item: CartItemType) {
   let newItems;
 
   const allItems = await getCartData();
 
   // In case the product is the cart already, just increase the quantiy
-  const productAlreadyThere = allItems.find((itm) => itm.id === id);
+  const productAlreadyThere = allItems.find(
+    (itm: CartItemType) => itm.id === item.id,
+  );
   if (productAlreadyThere) {
-    productAlreadyThere.quantity = quantity;
+    productAlreadyThere.quantity = item.quantity;
     newItems = allItems;
   }
 
   await cookies().set('cart', JSON.stringify(newItems));
 }
 
-export async function removeCartItemServerAction(id) {
+/** Removes a CartItem from the cart */
+export async function removeCartItemServerAction(id: CartItemType['id']) {
   const allItems = await getCartData();
 
-  const allItemsNew = allItems.filter((item) => item.id !== id);
+  const allItemsNew = allItems.filter((item: CartItemType) => item.id !== id);
 
   await cookies().set('cart', JSON.stringify(allItemsNew));
 }
@@ -56,24 +73,24 @@ export async function clearCartItemServerAction() {
   await cookies().delete('cart');
 }
 
+/** Returns the actual shopping cart (Product and Quantity) */
 export async function getCartProducts() {
   const allItems = await getCartData();
-  if (allItems) {
-    return await Promise.all(
-      allItems.map(async (item) => {
-        const [product] = await getProduct(item.id);
-        return {
-          product: product,
-          quantity: item.quantity,
-        };
-      }),
-    );
-  }
+  return await Promise.all(
+    allItems.map(async (item: CartItemType) => {
+      const [product] = await getProduct(item.id);
+      return {
+        product: product,
+        quantity: item.quantity,
+      };
+    }),
+  );
 }
 
+/** Returns the number of items in the cart */
 export async function getCartItemsTotal() {
   const cartData = await getCartData();
-  if (cartData) {
+  if (cartData.length) {
     return cartData.reduce(
       (prev, curr) => ({
         quantity: prev.quantity + curr.quantity,
@@ -85,21 +102,27 @@ export async function getCartItemsTotal() {
   }
 }
 
+/** Returns the total price  of all items in the cart */
 export async function getCartItemsTotalPrice() {
   let subtotal = 0;
   const cartProducts = await getCartProducts();
-  if (cartProducts) {
-    cartProducts.forEach((item) => {
+  cartProducts.forEach((item) => {
+    if (item.product?.price) {
       subtotal += item.quantity * item.product.price;
-    });
-  }
+    }
+  });
 
   return subtotal;
 }
-export async function cartFormAction(formData) {
+
+/** Form Action called from Cart.jsx. Implements:
+ * 1. Removing an Item from the Cart
+ * 2. Changeing the cart quantity the Items in the cart according to user input
+ */
+export async function cartFormAction(formData: FormData) {
   const cartProducts = await getCartProducts();
 
-  //Remove Item
+  // Remove Item
   /*   fromData: (value: <idToBeDeleted>)
   { name: 'quantity-id-3', value: '3' },
   { name: 'quantity-id-5', value: '1' },
@@ -119,24 +142,28 @@ export async function cartFormAction(formData) {
     for (const pair of formData.entries()) {
       const id = /quantity-id-(\d+)/g.exec(pair[0]);
       if (id) {
-        //we have a quantiy form field. Did the quantity change?
+        // we have a quantiy form field. Did the quantity change?
         const itemIdToCheck = Number(id[1]);
-        const quantity_new = Number(pair[1]);
+        const quantityNew = Number(pair[1]);
 
         if (
           cartProducts.find(
             (cartProduct) =>
-              cartProduct.product.id === itemIdToCheck &&
-              cartProduct.quantity !== quantity_new,
+              cartProduct.product?.id === itemIdToCheck &&
+              cartProduct.quantity !== quantityNew,
           )
         ) {
-          await changeCartItemServerAction(itemIdToCheck, quantity_new);
+          const changedCartItem: CartItemType = {
+            id: itemIdToCheck,
+            quantity: quantityNew,
+          };
+          await changeCartItemServerAction(changedCartItem);
         }
       }
     }
   }
 }
-export async function checkoutFormAction(formData) {
+export async function checkoutFormAction() {
   await clearCartItemServerAction();
 
   // invalidate next.js path, which results to initialized form fields on checkout page

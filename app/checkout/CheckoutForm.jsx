@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkoutFormAction } from '../serverActions.js';
+import { checkoutFormAction } from '../serverActions';
 import styles from './CheckoutForm.module.scss';
 
 function CheckoutForm() {

@@ -1,20 +1,9 @@
 import 'server-only';
 import { cache } from 'react';
+import { Product } from '../migrations/00000-createTableProduct';
 import { sql } from './connect';
 
-//import { getProduct } from './products';
-
-// type id: number;
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  slug: string;
-  price: number;
-};
-
-const products = [
+/* const products = [
   {
     id: 1,
     name: 'Product one',
@@ -50,7 +39,7 @@ const products = [
     slug: 'product-five',
     price: 20,
   },
-];
+]; */
 
 export const getProducts = cache(async () => {
   return await sql<Product[]>`

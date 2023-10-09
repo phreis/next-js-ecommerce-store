@@ -18,21 +18,22 @@ export default async function Cart() {
           {cartProducts.map((item) => (
             <div
               className={styles.cartContainer}
-              data-test-id={`cart-product-${item.product.id}`}
-              key={`product-${item.product.id}`}
+              data-test-id={`cart-product-${item.product?.id}`}
+              key={`product-${item.product?.id}`}
             >
               <input
                 type="number"
-                name={`quantity-id-${item.product.id}`}
+                name={`quantity-id-${item.product?.id}`}
                 defaultValue={item.quantity}
                 min="1"
               />
               <button name="changeQuantity" value="" hidden={true}>
                 Change quantity
               </button>
-              pieces of {item.product.name} @ {item.product.price} each. Total:
-              {item.quantity * item.product.price}
-              <button name="removeItem" value={item.product.id}>
+              pieces of {item.product?.name} @ {item.product?.price} each.
+              Total:
+              {item.product?.price ? item.quantity * item.product.price : 0}
+              <button name="removeItem" value={item.product?.id}>
                 Remove
               </button>
             </div>
@@ -40,10 +41,10 @@ export default async function Cart() {
         </form>
         <div data-test-id="cart-total">Subtotal: {subTotal}</div>
         <div>
-          <Link data-test-id="cart-checkout" role="button" href={`/checkout`}>
+          <Link data-test-id="cart-checkout" role="button" href="/checkout">
             Checkout
           </Link>
-          <Link role="button" href={`/products`}>
+          <Link role="button" href="/products">
             Continue shopping
           </Link>
         </div>
@@ -53,7 +54,7 @@ export default async function Cart() {
     return (
       <p>
         Your cart is empty!{' '}
-        <Link role="button" href={`/products`}>
+        <Link role="button" href="/products">
           Continue shopping
         </Link>
       </p>

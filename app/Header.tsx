@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import styles from './Header.module.scss';
-import { getCartItemsTotal } from './serverActions.js';
+import { getCartItemsTotal } from './serverActions';
 
 async function Header() {
   const itemsTotal = await getCartItemsTotal();
