@@ -21,24 +21,29 @@ export async function getCartDataServerAction(): Promise<CartItemType[]> {
     : [];
 }
 
+export async function getNewItems(
+  itemToBeAdded: CartItemType,
+  allItems: Array<CartItemType>,
+) {
+  // In case the product is the cart already, just increase the quantiy
+  const productAlreadyThere = allItems.find(
+    (itm: CartItemType) => itm.id === itemToBeAdded.id,
+  );
+  if (productAlreadyThere) {
+    productAlreadyThere.quantity += itemToBeAdded.quantity;
+    return await allItems;
+  } else {
+    return await [...allItems, itemToBeAdded];
+  }
+}
+
 /** Adds a CartItem to the shopping cart.
  * In case the product is the cart already, the quantiy is increased
  */
 export async function addCartItemServerAction(item: CartItemType) {
-  let newItems;
-
   const allItems = await getCartDataServerAction();
 
-  // In case the product is the cart already, just increase the quantiy
-  const productAlreadyThere = allItems.find(
-    (itm: CartItemType) => itm.id === item.id,
-  );
-  if (productAlreadyThere) {
-    productAlreadyThere.quantity += item.quantity;
-    newItems = allItems;
-  } else {
-    newItems = [...allItems, item];
-  }
+  const newItems = await getNewItems(item, allItems);
 
   await cookies().set('cart', JSON.stringify(newItems));
 }
