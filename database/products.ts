@@ -41,11 +41,17 @@ import { sql } from './connect';
   },
 ]; */
 
-export const getProducts = cache(async () => {
+/* export const getProducts = cache(async () => {
   return await sql<Product[]>`
     SELECT * FROM products
   `;
-});
+}); */
+
+export const getProducts = async function () {
+  return await sql<Product[]>`
+    SELECT * FROM products
+  `;
+};
 
 export const getProduct = cache(async (id: Product['id']) => {
   return await sql<Product[]>`

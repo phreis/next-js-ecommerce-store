@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
 import styles from './Header.module.scss';
-import { getCartItemsTotal } from './serverActions';
+import { getCartItemsTotalServerAction } from './serverActions';
 
 async function Header() {
-  const itemsTotal = await getCartItemsTotal();
+  const itemsTotal = await getCartItemsTotalServerAction();
   return (
     <header>
       <nav className={styles.nav}>
@@ -22,7 +22,11 @@ async function Header() {
           >
             Shopping cart
           </Link>
-          <Link className={styles.checkout} href="/checkout">
+          <Link
+            className={styles.checkout}
+            data-test-id="cart-checkout"
+            href="/checkout"
+          >
             Checkout{' '}
             <span data-test-id="cart-count">Items total: {itemsTotal}</span>
           </Link>

@@ -12,7 +12,7 @@ export type CartItemType = {
 
 /** Returns the actual cart content from the cookie 'cart'
  */
-export async function getCartData(): Promise<CartItemType[]> {
+export async function getCartDataServerAction(): Promise<CartItemType[]> {
   const allItemsRaw = await cookies().get('cart');
   return allItemsRaw
     ? allItemsRaw.value
@@ -27,7 +27,7 @@ export async function getCartData(): Promise<CartItemType[]> {
 export async function addCartItemServerAction(item: CartItemType) {
   let newItems;
 
-  const allItems = await getCartData();
+  const allItems = await getCartDataServerAction();
 
   // In case the product is the cart already, just increase the quantiy
   const productAlreadyThere = allItems.find(
@@ -47,7 +47,7 @@ export async function addCartItemServerAction(item: CartItemType) {
 export async function changeCartItemServerAction(item: CartItemType) {
   let newItems;
 
-  const allItems = await getCartData();
+  const allItems = await getCartDataServerAction();
 
   // In case the product is the cart already, just increase the quantiy
   const productAlreadyThere = allItems.find(
@@ -63,7 +63,7 @@ export async function changeCartItemServerAction(item: CartItemType) {
 
 /** Removes a CartItem from the cart */
 export async function removeCartItemServerAction(id: CartItemType['id']) {
-  const allItems = await getCartData();
+  const allItems = await getCartDataServerAction();
 
   const allItemsNew = allItems.filter((item: CartItemType) => item.id !== id);
 
@@ -74,8 +74,8 @@ export async function clearCartItemServerAction() {
 }
 
 /** Returns the actual shopping cart (Product and Quantity) */
-export async function getCartProducts() {
-  const allItems = await getCartData();
+export async function getCartProductsServerAction() {
+  const allItems = await getCartDataServerAction();
   return await Promise.all(
     allItems.map(async (item: CartItemType) => {
       const [product] = await getProduct(item.id);
@@ -88,8 +88,8 @@ export async function getCartProducts() {
 }
 
 /** Returns the number of items in the cart */
-export async function getCartItemsTotal() {
-  const cartData = await getCartData();
+export async function getCartItemsTotalServerAction() {
+  const cartData = await getCartDataServerAction();
   if (cartData.length) {
     return cartData.reduce(
       (prev, curr) => ({
@@ -103,9 +103,9 @@ export async function getCartItemsTotal() {
 }
 
 /** Returns the total price  of all items in the cart */
-export async function getCartItemsTotalPrice() {
+export async function getCartItemsTotalPriceServerAction() {
   let subtotal = 0;
-  const cartProducts = await getCartProducts();
+  const cartProducts = await getCartProductsServerAction();
   cartProducts.forEach((item) => {
     if (item.product?.price) {
       subtotal += item.quantity * item.product.price;
@@ -120,7 +120,7 @@ export async function getCartItemsTotalPrice() {
  * 2. Changeing the cart quantity the Items in the cart according to user input
  */
 export async function cartFormAction(formData: FormData) {
-  const cartProducts = await getCartProducts();
+  const cartProducts = await getCartProductsServerAction();
 
   // Remove Item
   /*   fromData: (value: <idToBeDeleted>)

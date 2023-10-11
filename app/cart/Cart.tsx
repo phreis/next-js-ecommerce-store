@@ -2,14 +2,14 @@ import Link from 'next/link';
 import React from 'react';
 import {
   cartFormAction,
-  getCartItemsTotalPrice,
-  getCartProducts,
+  getCartItemsTotalPriceServerAction,
+  getCartProductsServerAction,
 } from '../serverActions';
 import styles from './Cart.module.scss';
 
 export default async function Cart() {
-  const cartProducts = await getCartProducts();
-  const subTotal = await getCartItemsTotalPrice();
+  const cartProducts = await getCartProductsServerAction();
+  const subTotal = await getCartItemsTotalPriceServerAction();
 
   if (cartProducts.length) {
     return (
