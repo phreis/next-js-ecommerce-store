@@ -21,6 +21,9 @@ export default async function Cart() {
               data-test-id={`cart-product-${item.product?.id}`}
               key={`product-${item.product?.id}`}
             >
+              <span data-test-id={`cart-product-quantity-${item.product?.id}`}>
+                {item.quantity}
+              </span>
               <input
                 type="number"
                 name={`quantity-id-${item.product?.id}`}
@@ -33,13 +36,19 @@ export default async function Cart() {
               pieces of {item.product?.name} @ {item.product?.price} each.
               Total:
               {item.product?.price ? item.quantity * item.product.price : 0}
-              <button name="removeItem" value={item.product?.id}>
+              <button
+                data-test-id={`cart-product-remove-${item.product?.id}`}
+                name="removeItem"
+                value={item.product?.id}
+              >
                 Remove
               </button>
             </div>
           ))}
         </form>
-        <div data-test-id="cart-total">Subtotal: {subTotal}</div>
+        <div>
+          Subtotal:<span data-test-id="cart-total"> {subTotal}</span>
+        </div>
         <div>
           <Link data-test-id="cart-checkout" role="button" href="/checkout">
             Checkout

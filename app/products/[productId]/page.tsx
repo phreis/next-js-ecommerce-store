@@ -36,7 +36,10 @@ export default async function ProductPage({ params }: Props) {
       ) : (
         ''
       )}
-      <p data-test-id="product-price">Price: {singleProduct.price}</p>
+      <p>
+        {' '}
+        Price: <span data-test-id="product-price">{singleProduct.price}</span>€
+      </p>
       <CartItemAdder id={singleProduct.id} />
     </div>
   );
