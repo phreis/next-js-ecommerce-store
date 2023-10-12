@@ -10,16 +10,14 @@ export default function CartItemAdder({ id }: { id: ProductType['id'] }) {
   return (
     <div>
       <form id="form" action={cartItemAdderFormAction}>
-        <input name="id" value={id} hidden={true} />
+        <input name="id" value={id} hidden={true} readOnly={true} />
         <input
           data-test-id="product-quantity"
           type="number"
           name="quantity"
           value={quantity}
-          onInput={(env) =>
-            Number(env.currentTarget.value) >= 1 &&
-            setQuantity(Number(env.currentTarget.value))
-          }
+          min={1}
+          onInput={(env) => setQuantity(Number(env.currentTarget.value))}
         />
         <button
           data-test-id="product-add-to-cart"
