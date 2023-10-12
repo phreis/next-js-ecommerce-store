@@ -27,8 +27,8 @@ async function Header() {
             data-test-id="cart-checkout"
             href="/checkout"
           >
-            Checkout{' '}
-            <span data-test-id="cart-count">Items total: {itemsTotal}</span>
+            Checkout Items total:{' '}
+            <span data-test-id="cart-count">{itemsTotal}</span>
           </Link>
         </div>
       </nav>
