@@ -1,4 +1,3 @@
-import Image from 'next/image.js';
 import { Product as ProductType } from '../../migrations/00000-createTableProduct';
 import styles from './Product.module.scss';
 
@@ -10,7 +9,7 @@ export default function Product({ product }: { product: ProductType }) {
         href={`/products/${product.id}`}
       >
         {product.image ? (
-          <Image
+          <img
             src={product.image}
             width={100}
             height={100}
