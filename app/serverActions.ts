@@ -120,6 +120,21 @@ export async function getCartItemsTotalPriceServerAction() {
   return subtotal;
 }
 
+export async function cartItemAdderFormAction(formData: FormData) {
+  console.log(formData);
+  const id = Number(formData.get('id'));
+
+  const newCartItem: CartItemType = {
+    id: id,
+    quantity: Number(formData.get('quantity')),
+  };
+
+  await addCartItemServerAction(newCartItem);
+
+  revalidatePath(`/products/${id}`); // invalidate next.js path, which results to initialized form fields on checkout page
+  // headers(); // Hack - to make the site refresh
+}
+
 /** Form Action called from Cart.jsx. Implements:
  * 1. Removing an Item from the Cart
  * 2. Changeing the cart quantity the Items in the cart according to user input

@@ -1,37 +1,24 @@
-import { revalidatePath } from 'next/cache';
-import { headers } from 'next/headers';
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import { Product as ProductType } from '../migrations/00000-createTableProduct';
-import { addCartItemServerAction, CartItemType } from './serverActions';
+import { cartItemAdderFormAction, CartItemType } from './serverActions';
 
 export default function CartItemAdder({ id }: { id: ProductType['id'] }) {
-  async function addItem(formData: FormData) {
-    'use server';
-    /*     await addCartItemServerAction({
-      id: id,
-      quantity: Number(formData.get('quantity')),
-    }); */
+  const initialQuantity: CartItemType['quantity'] = 1;
+  const [quantity, setQuantity] = useState(initialQuantity);
 
-    const newCartItem: CartItemType = {
-      id: id,
-      quantity: Number(formData.get('quantity')),
-    };
-
-    await addCartItemServerAction(newCartItem);
-
-    revalidatePath(`/products/${id}`); // invalidate next.js path, which results to initialized form fields on checkout page
-    headers(); // Hack - to make the site refresh
-    // redirect(`/products/${product.id}`);
-  }
   return (
     <div>
-      <form id="form" action={addItem}>
+      <form id="form" action={cartItemAdderFormAction}>
         <input
           data-test-id="product-quantity"
           type="number"
           name="quantity"
-          defaultValue="1"
-          min="1"
+          value={quantity}
+          onInput={(env) =>
+            Number(env.currentTarget.value) >= 1 &&
+            setQuantity(Number(env.currentTarget.value))
+          }
         />
         <button
           data-test-id="product-add-to-cart"
