@@ -68,5 +68,5 @@ test('E2E: Checkout flow, payment page, thank you page', async ({ page }) => {
   // Check if Header has updated (set to 0)
   await expect(
     page.locator('[data-test-id="cart-checkout"] > span'),
-  ).toHaveText('Items total: 0');
+  ).toHaveText('0');
 });

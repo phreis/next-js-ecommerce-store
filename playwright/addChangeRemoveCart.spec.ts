@@ -27,7 +27,7 @@ test('E2E: Add to cart, change quantity and remove from cart', async ({
   // Check if Header has updated
   await expect(
     page.locator('[data-test-id="cart-checkout"] > span'),
-  ).toHaveText('Items total: 10');
+  ).toHaveText('10');
 
   // Goto shopping cart
   await page.locator('[data-test-id="cart-link"]').click();
