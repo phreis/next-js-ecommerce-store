@@ -62,7 +62,7 @@ export default async function Cart() {
   } else {
     return (
       <p>
-        Your cart is empty!{' '}
+        Your cart is empty! <span data-test-id="cart-total"> {subTotal}</span>
         <Link role="button" href="/products">
           Continue shopping
         </Link>
