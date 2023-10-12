@@ -11,6 +11,7 @@ function ThankYouPage() {
   return (
     <div>
       <h1>Thank you for your order</h1>
+      <span data-test-id="cart-total">{0}</span>
       <p>
         <Link role="button" href="/products">
           Continue shopping
