@@ -121,7 +121,6 @@ export async function getCartItemsTotalPriceServerAction() {
 }
 
 export async function cartItemAdderFormAction(formData: FormData) {
-  console.log(formData);
   const id = Number(formData.get('id'));
 
   const newCartItem: CartItemType = {

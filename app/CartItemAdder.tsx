@@ -10,6 +10,7 @@ export default function CartItemAdder({ id }: { id: ProductType['id'] }) {
   return (
     <div>
       <form id="form" action={cartItemAdderFormAction}>
+        <input name="id" value={id} hidden={true} />
         <input
           data-test-id="product-quantity"
           type="number"
