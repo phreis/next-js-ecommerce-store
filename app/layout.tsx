@@ -14,7 +14,11 @@ export const metadata = {
   description: 'An experimental Ecommerce store',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children, // will be a page or nested layout
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>

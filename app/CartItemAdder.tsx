@@ -5,19 +5,20 @@ import { cartItemAdderFormAction, CartItemType } from './serverActions';
 
 export default function CartItemAdder({ id }: { id: ProductType['id'] }) {
   const initialQuantity: CartItemType['quantity'] = 1;
-  const [quantity, setQuantity] = useState(1);
+
+  const [quantity, setQuantity] = useState(initialQuantity);
 
   return (
     <div>
-      <form id="form" onSubmit={(ev) => ev.preventDefault}>
-        <input name="id" value={id} hidden={true} />
+      <form id="form" action={cartItemAdderFormAction}>
+        <input name="id" value={id} hidden={true} readOnly={true} />
         <input
           data-test-id="product-quantity"
           type="number"
           name="quantity"
           value={quantity}
           min={1}
-          onChange={(env) => setQuantity(Number(env.currentTarget.value))}
+          onInput={(env) => setQuantity(Number(env.currentTarget.value))}
         />
         <button
           data-test-id="product-add-to-cart"

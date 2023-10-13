@@ -1,5 +1,13 @@
 import { Sql } from 'postgres';
 
+export type Product = {
+  id: number;
+  name: string;
+  image: string | null;
+  slug: string;
+  price: number | null;
+};
+
 export async function up(sql: Sql) {
   await sql`CREATE TABLE products (
   id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
