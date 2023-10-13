@@ -1,6 +1,6 @@
 # Next.js ecommerce store
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This demo project tries to mimic the very basic functionalties of a fictive ECommerce shop. It basically a personal proof of concept of various aspects of React/next-js/postgres
 
 ## Getting Started
 
