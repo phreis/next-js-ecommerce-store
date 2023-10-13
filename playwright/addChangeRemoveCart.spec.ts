@@ -42,6 +42,6 @@ test('E2E: Add to cart, change quantity and remove from cart', async ({
   await page.getByRole('button', { name: 'Remove' }).click();
   // await page.getByRole('button', { name: 'Remove' }).click();
   await expect(
-    await page.getByText('Your cart is empty! Continue shopping'),
-  ).toHaveText('Your cart is empty! Continue shopping');
+    await page.getByText('Your cart is empty!Continue shopping'),
+  ).toHaveText('Your cart is empty!Continue shopping');
 });

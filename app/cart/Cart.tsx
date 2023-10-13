@@ -61,12 +61,15 @@ export default async function Cart() {
     );
   } else {
     return (
-      <p>
-        Your cart is empty! <span data-test-id="cart-total"> {subTotal}</span>
-        <Link role="button" href="/products">
-          Continue shopping
-        </Link>
-      </p>
+      <>
+        <span data-test-id="cart-total"> {subTotal}</span>
+        <p>
+          Your cart is empty!
+          <Link role="button" href="/products">
+            Continue shopping
+          </Link>
+        </p>
+      </>
     );
   }
 }
