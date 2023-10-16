@@ -57,7 +57,7 @@ export default async function Cart() {
                     src="/images/icon-trashcan.png"
                     width={30}
                     height={30}
-                    alt="Delete"
+                    alt="Remove"
                   />
                 </button>
                 Total:{' '}
