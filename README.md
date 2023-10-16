@@ -12,25 +12,6 @@ This demo project tries to mimic the very basic functionalties of a fictive ECom
 - E2E Test
 - Deployment
 
-## My learnings while doing this project:
-
-- Get basic understanding of the next.js concepts e.g. seperation into Server Side Components and Client Side Components. What is should be where and how are Client/Server side related.
-- Understanding of the next.js route/dynamic route concepts and its implementation.
-- next. js server actions, which I finally felt in love with 😉
-- Tried to avoid client components whenever possible, implemented Server Components instead e.g. Form with Form Action instead of useState/input events
-- Introducing Type Script
-- Database connection: Learn to set up a postgres database the proper way. Learn how and where to keep credentials save and how to retrieve them. How to structure database related functionalities within the project.
-- Implement and use Database migration using ley.js
-- Elaboration on Unit tests - What makes sense to be tested. Refactor parts of the codebase in order to get testable functions. (at least as an example)
-- Implement unit test(s) (Jest framework)
-- Implement E2E test using Playwright (`npx playwright test --ui*` and `npx playwright codegen <url>` )
-- Learn gitHub actions:
-
-  - Set up `.github/wokflow/<action>.yml` to do jest/playwright tests on github on each push (Involves setting up a and run a Docker-Container)
-  - Set up `.github/wokflow/<action>.yml` to trigger deployment (Fly.io)
-
-- Learn how deployment to production is beeing done these days. (Fly.io)
-
 ## Installation
 
 1.  ### Clone this repo to you local machine and install dependencies
@@ -169,3 +150,22 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You may receive a failed to fetch an image or build from source error during deployment:
 Error failed to fetch an image or build from source: error building: executor failed running [/bin/sh -c yarn build]: exit code: 1
 Deploys may fail for a number of reasons, to find the real error message you will need to scroll up in the logs and find the first line that looks like an error.
+
+## My learnings while doing this project:
+
+- Get basic understanding of the next.js concepts e.g. seperation into Server Side Components and Client Side Components. What is should be where and how are Client/Server side related.
+- Understanding of the next.js route/dynamic route concepts and its implementation.
+- next. js server actions, which I finally felt in love with 😉
+- Tried to avoid client components whenever possible, implemented Server Components instead e.g. Form with Form Action instead of useState/input events
+- Introducing Type Script
+- Database connection: Learn to set up a postgres database the proper way. Learn how and where to keep credentials save and how to retrieve them. How to structure database related functionalities within the project.
+- Implement and use Database migration using ley.js
+- Elaboration on Unit tests - What makes sense to be tested. Refactor parts of the codebase in order to get testable functions. (at least as an example)
+- Implement unit test(s) (Jest framework)
+- Implement E2E test using Playwright (`npx playwright test --ui*` and `npx playwright codegen <url>` )
+- Learn gitHub actions:
+
+  - Set up `.github/wokflow/<action>.yml` to do jest/playwright tests on github on each push (Involves setting up a and run a Docker-Container)
+  - Set up `.github/wokflow/<action>.yml` to trigger deployment (Fly.io)
+
+- Learn how deployment to production is beeing done these days. (Fly.io)

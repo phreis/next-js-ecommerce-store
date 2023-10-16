@@ -20,7 +20,7 @@ export default function Product({ product }: { product: ProductType }) {
         )}
         <div className={styles.priceTag}>
           <div className={styles.productName}>{product.name}</div>
-          <div className={styles.productPrice}>Price {product.price} €</div>
+          <div className={styles.productPrice}>{product.price} €</div>
         </div>
       </a>
     </div>
