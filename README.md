@@ -1,5 +1,7 @@
 # Next.js ecommerce store
 
+![Life Essentials](public/images/life-essentials.gif)
+
 This demo project tries to mimic the very basic functionalties of a fictive ECommerce shop. It basically can be seen as a personal proof of concept of the following concepts:
 
 - Typescript
