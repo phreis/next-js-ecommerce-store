@@ -18,6 +18,7 @@
     justify-content: space-between;
     border-bottom: #666666;
     border-bottom-style: dotted;
+    border-bottom-width: 1px;
     font-size: 20px;
     font-weight: 400;
     color: #666666;
@@ -65,5 +66,23 @@
   }
   .price {
     font-weight: 800;
+  }
+}
+.cartFooter {
+  width: 500px;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  color: #666666;
+  font-size: 16px;
+  font-weight: 400;
+  a {
+    text-decoration: none;
+    color: #666666;
+  }
+  a:hover {
+    color: #171717;
   }
 }

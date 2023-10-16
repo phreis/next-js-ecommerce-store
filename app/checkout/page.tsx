@@ -15,10 +15,7 @@ export default async function CheckoutPage() {
       <h1>Checkout</h1>
 
       {cardData.length ? (
-        <>
-          Subtotal:{subTotal}
-          <CheckoutForm />
-        </>
+        <CheckoutForm />
       ) : (
         <p>
           Your cart is empty!{' '}

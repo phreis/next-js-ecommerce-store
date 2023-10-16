@@ -10,12 +10,12 @@ function CartPage() {
       <div className={styles.cartContainer}>
         <Cart />
       </div>
-      <div>
-        <Link data-test-id="cart-checkout" role="button" href="/checkout">
-          Checkout
-        </Link>
+      <div className={styles.cartFooter}>
         <Link role="button" href="/products">
           Continue shopping
+        </Link>
+        <Link data-test-id="cart-checkout" role="button" href="/checkout">
+          Checkout
         </Link>
       </div>
     </div>
