@@ -122,6 +122,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 9. Create an app, specifying the name using only lowercase letters and dashes:
    flyctl apps create --name <app name> --machines
 10. Create the Fly.io config files as demonstrated in the lecture (also available in the Next.js example repo)
+    - .dockerignore
+    - .env.production
+    - .github/workflows/test-playwright-and-deploy-to-fly-io.yml
+    - Dockerfile
+    - database/connect.ts
+    - fly.toml (in fly.toml adjust app name!)
+    - next.config.js
+    - playwright/navigation.spec.ts
+    - scripts/fly-io-start.sh
+    - util/config.mjs
 11. Change your ley.config.mjs as in the lecture: add ssl config for Vercel
 12. Change your util/config.mjs as in the lecture: exit early in production, alias Vercel database environment variables
 13. Change your next.config.js as in the lecture: disable linting and type checking on build, since this happens earlier in the GitHub Actions deploy workflow
